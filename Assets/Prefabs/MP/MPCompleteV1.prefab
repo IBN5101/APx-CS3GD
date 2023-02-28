@@ -688,10 +688,10 @@ Animator:
   m_GameObject: {fileID: 2431297213247425873}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 36078ab0369161e49a29d349ae3e0739, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 20b693187444adf4297343119f5b7741, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -787,7 +787,7 @@ MonoBehaviour:
   FallTimeout: 0.15
   Grounded: 1
   GroundedOffset: -0.1
-  GroundedRadius: 0.25
+  GroundedRadius: 0.28
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1

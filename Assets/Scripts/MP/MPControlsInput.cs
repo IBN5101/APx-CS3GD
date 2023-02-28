@@ -25,6 +25,11 @@ public class MPControlsInput : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
     }
 
+    private void Start()
+    {
+        SetCursorState(cursorLocked);
+    }
+
     public void OnMove(InputValue value)
     {
         MoveInput(value.Get<Vector2>());
