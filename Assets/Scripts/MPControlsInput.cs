@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class MPControlsInput : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput;
+    private PlayerInput playerInput;
 
     [Header("Normal Input Values")]
     public Vector2 move;
@@ -19,6 +19,11 @@ public class MPControlsInput : MonoBehaviour
     [Header("Mouse Cursor Settings")]
     public bool cursorLocked = true;
     public bool cursorInputForLook = true;
+
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
 
     public void OnMove(InputValue value)
     {

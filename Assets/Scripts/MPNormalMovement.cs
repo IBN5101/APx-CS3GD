@@ -1,6 +1,7 @@
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,7 +29,7 @@ public class MPNormalMovement : MonoBehaviour
     [Space(10)]
 
     [Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
-    public float JumpTimeout = 0.50f;
+    public float JumpTimeout = 0f;
     [Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
     public float FallTimeout = 0.15f;
 
@@ -47,7 +48,11 @@ public class MPNormalMovement : MonoBehaviour
     [Header("Cinemachine")]
 
     [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-    public GameObject CinemachineCameraTarget;
+    [SerializeField]
+    [ReadOnlyInspector]
+    // IBN: Assigned at Awake()
+    private GameObject CinemachineCameraTarget;
+    private string CameraTargetName = "CameraTarget";
     [Tooltip("How far in degrees can you move the camera up")]
     public float TopClamp = 70.0f;
     [Tooltip("How far in degrees can you move the camera down")]
@@ -95,6 +100,9 @@ public class MPNormalMovement : MonoBehaviour
         {
             _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         }
+
+        // Assign reference to CameraTarget
+        CinemachineCameraTarget = transform.Find(CameraTargetName).gameObject;
     }
 
     private void Start()
