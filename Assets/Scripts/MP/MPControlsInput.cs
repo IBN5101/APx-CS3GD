@@ -65,6 +65,12 @@ public class MPControlsInput : MonoBehaviour
         //}
     }
 
+    public void OnExitGame(InputValue value)
+    {
+        // NOTE: THIS IS A BAD IDEA
+        Application.Quit();
+    }
+
     #region Update values
     private void MoveInput(Vector2 newMoveDirection)
     {
@@ -82,6 +88,7 @@ public class MPControlsInput : MonoBehaviour
     }
     #endregion
 
+    #region Cursor
     private void OnApplicationFocus(bool hasFocus)
     {
         SetCursorState(cursorLocked);
@@ -90,5 +97,6 @@ public class MPControlsInput : MonoBehaviour
     private void SetCursorState(bool newState)
     {
         Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
-    }
+    } 
+    #endregion
 }
