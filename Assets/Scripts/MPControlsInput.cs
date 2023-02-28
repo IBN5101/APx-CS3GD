@@ -5,9 +5,12 @@ using UnityEngine.InputSystem;
 
 public class MPControlsInput : MonoBehaviour
 {
-    [Header("Character Input Values")]
+    [SerializeField] private PlayerInput playerInput;
+
+    [Header("Normal Input Values")]
     public Vector2 move;
     public Vector2 look;
+    public Vector3 dash;
     public bool jump;
 
     [Header("Movement Settings")]
@@ -35,20 +38,39 @@ public class MPControlsInput : MonoBehaviour
         JumpInput(value.isPressed);
     }
 
-    public void MoveInput(Vector2 newMoveDirection)
+    public void OnDash(InputValue value)
+    {
+        dash = value.Get<Vector3>();
+    }
+
+    public void OnClick(InputValue value)
+    {
+        //if (playerInput.currentActionMap.name == "Normal")
+        //{
+        //    playerInput.SwitchCurrentActionMap("Special");
+        //}
+        //else
+        //{
+        //    playerInput.SwitchCurrentActionMap("Normal");
+        //}
+    }
+
+    #region Update values
+    private void MoveInput(Vector2 newMoveDirection)
     {
         move = newMoveDirection;
     }
 
-    public void LookInput(Vector2 newLookDirection)
+    private void LookInput(Vector2 newLookDirection)
     {
         look = newLookDirection;
     }
 
-    public void JumpInput(bool newJumpState)
+    private void JumpInput(bool newJumpState)
     {
         jump = newJumpState;
     }
+    #endregion
 
     private void OnApplicationFocus(bool hasFocus)
     {
