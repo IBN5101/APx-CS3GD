@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ExitGame",
+                    "name": "Escape",
                     "type": "Button",
                     "id": "d4b8f0fc-67ce-4d6e-b3e5-077b01a1658a",
                     "expectedControlType": "Button",
@@ -191,7 +191,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "ExitGame",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

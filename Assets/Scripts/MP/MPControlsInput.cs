@@ -63,10 +63,9 @@ public class MPControlsInput : MonoBehaviour
 		OnActionAFired?.Invoke(this, EventArgs.Empty);
 	}
 
-	public void OnExitGame(InputValue value)
+	public void OnEscape(InputValue value)
 	{
-		// TODO: Implement Pause screen.
-		Application.Quit();
+		GameController.Instance.PauseToggle();
 	}
 
 	public void SwitchActionMap()
@@ -109,6 +108,13 @@ public class MPControlsInput : MonoBehaviour
 	private void SetCursorState(bool newState)
 	{
 		Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+	}
+
+	public void SetCursorAll(bool locked)
+	{
+		cursorLocked = locked;
+		cursorInputForLook = locked;
+		Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
 	}
 	#endregion
 }
