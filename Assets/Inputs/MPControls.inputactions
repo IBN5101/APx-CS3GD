@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Click",
+                    "name": "ActionA",
                     "type": "Button",
                     "id": "b783dbc0-425f-4aac-b900-85476a64ce00",
                     "expectedControlType": "Button",
@@ -176,11 +176,11 @@
                 {
                     "name": "",
                     "id": "bae620ba-5542-45f2-ab8b-a5d2ed2f15eb",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Click",
+                    "action": "ActionA",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -202,6 +202,15 @@
             "id": "1fdaa834-0fe4-4048-b441-f649857d0e8d",
             "actions": [
                 {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "c613b753-48c7-4a0e-b6ab-0494a2ad2c17",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Dash",
                     "type": "Value",
                     "id": "d60937ad-3ca8-4f7a-95d1-998df863fa30",
@@ -211,7 +220,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Click",
+                    "name": "ActionA",
                     "type": "Button",
                     "id": "d14bccea-1c27-490e-85d3-f76ab935a180",
                     "expectedControlType": "Button",
@@ -301,11 +310,22 @@
                 {
                     "name": "",
                     "id": "5af3ad65-3429-4e0f-81fe-afd9b2d6f703",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Click",
+                    "action": "ActionA",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b661e15-2062-488a-a9bc-97a97bc1cef7",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "InvertVector2(invertX=false),ScaleVector2(x=0.05,y=0.05)",
+                    "groups": "KeyboardMouse",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

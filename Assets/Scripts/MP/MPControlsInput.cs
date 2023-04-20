@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class MPControlsInput : MonoBehaviour
 	[Header("Mouse Cursor Settings")]
 	public bool cursorLocked = true;
 	public bool cursorInputForLook = true;
+
+	// Events
+	public event EventHandler OnActionAFired;
 
 	private void Awake()
 	{
@@ -54,22 +58,29 @@ public class MPControlsInput : MonoBehaviour
 		dash = value.Get<Vector3>();
 	}
 
-	public void OnClick(InputValue value)
+	public void OnActionA(InputValue value)
 	{
-		//if (playerInput.currentActionMap.name == "Normal")
-		//{
-		//    playerInput.SwitchCurrentActionMap("Special");
-		//}
-		//else
-		//{
-		//    playerInput.SwitchCurrentActionMap("Normal");
-		//}
+		OnActionAFired?.Invoke(this, EventArgs.Empty);
 	}
 
 	public void OnExitGame(InputValue value)
 	{
-		// NOTE: THIS IS A BAD IDEA
+		// TODO: Implement Pause screen.
 		Application.Quit();
+	}
+
+	public void SwitchActionMap()
+	{
+		// Switch method because we are only working with 2 actions maps.
+		// Switch between Normal movement to Special movement
+		if (playerInput.currentActionMap.name == "Normal")
+		{
+			playerInput.SwitchCurrentActionMap("Special");
+		}
+		else
+		{
+			playerInput.SwitchCurrentActionMap("Normal");
+		}
 	}
 
 	#region Update values

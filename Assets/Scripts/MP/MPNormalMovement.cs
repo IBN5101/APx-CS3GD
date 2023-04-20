@@ -1,6 +1,8 @@
 using StarterAssets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.EditorUtilities;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -68,6 +70,7 @@ public class MPNormalMovement : MonoBehaviour
 
 	// player
 	private float _speed;
+	private float _animationBlend;
 	private float _targetRotation = 0.0f;
 	private float _rotationVelocity;
 	private float _verticalVelocity;
@@ -92,6 +95,16 @@ public class MPNormalMovement : MonoBehaviour
 			return _playerInput.currentControlScheme == "KeyboardMouse";
 		}
 	}
+
+	// (IBN) Events
+	public event EventHandler<bool> OnGroundedCheck;
+	public event EventHandler<float[]> OnMoveAnimation;
+	public event EventHandler OnGrounded;
+	public event EventHandler OnJump;
+	public event EventHandler OnFall;
+
+	// (IBN) Move toggle (for Dashing)
+	private bool _normalMovementEnabled = true;
 
 	private void Awake()
 	{
@@ -138,6 +151,8 @@ public class MPNormalMovement : MonoBehaviour
 			transform.position.z);
 		Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
 			QueryTriggerInteraction.Ignore);
+
+		OnGroundedCheck?.Invoke(this, Grounded);
 	}
 
 	private void CameraRotation()
@@ -195,6 +210,9 @@ public class MPNormalMovement : MonoBehaviour
 			_speed = targetSpeed;
 		}
 
+		_animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+		if (_animationBlend < 0.01f) _animationBlend = 0f;
+
 		// normalise input direction
 		Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
@@ -215,8 +233,17 @@ public class MPNormalMovement : MonoBehaviour
 		Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
 		// move the player
-		_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+		if (_normalMovementEnabled)
+		{
+			_controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
 						 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+		}
+		
+		// (IBN) Animation event invoke
+		float[] animationData = new float[2];
+		animationData[0] = _animationBlend;
+		animationData[1] = inputMagnitude;
+		OnMoveAnimation?.Invoke(this, animationData);
 	}
 
 	private void JumpAndGravity()
@@ -226,17 +253,21 @@ public class MPNormalMovement : MonoBehaviour
 			// reset the fall timeout timer
 			_fallTimeoutDelta = FallTimeout;
 
+			OnGrounded?.Invoke(this, EventArgs.Empty);
+
 			// stop our velocity dropping infinitely when grounded
 			if (_verticalVelocity < 0.0f)
 			{
 				_verticalVelocity = -2f;
 			}
 
-			// Jump
+			// [!!!] Jump
 			if (_input.jump && _jumpTimeoutDelta <= 0.0f)
 			{
 				// the square root of H * -2 * G = how much velocity needed to reach desired height
 				_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+				OnJump?.Invoke(this, EventArgs.Empty);
 			}
 
 			// jump timeout
@@ -254,6 +285,10 @@ public class MPNormalMovement : MonoBehaviour
 			if (_fallTimeoutDelta >= 0.0f)
 			{
 				_fallTimeoutDelta -= Time.deltaTime;
+			}
+			else
+			{
+				OnFall?.Invoke(this, EventArgs.Empty);
 			}
 
 			// if we are not grounded, do not jump
@@ -288,5 +323,10 @@ public class MPNormalMovement : MonoBehaviour
 			GroundedRadius);
 	}
 
-
+	public void ToggleNormalMovement(bool value)
+	{
+		_normalMovementEnabled = value;
+		// Quick hack:
+		_verticalVelocity = 0.0f;
+	}
 }
