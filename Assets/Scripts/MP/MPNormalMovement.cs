@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// (IBN) Made with refernce to Unity's StarterAssets [ThirdPersonController.cs]
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerInput))]
 public class MPNormalMovement : MonoBehaviour
@@ -20,14 +21,12 @@ public class MPNormalMovement : MonoBehaviour
 	public float RotationSmoothTime = 0.12f;
 	[Tooltip("Acceleration and deceleration")]
 	public float SpeedChangeRate = 10.0f;
-
 	[Space(10)]
 
 	[Tooltip("The height the player can jump")]
 	public float JumpHeight = 1.2f;
 	[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
-	public float Gravity = -15.0f;
-
+	public float Gravity = -9.81f;
 	[Space(10)]
 
 	[Tooltip("Time required to pass before being able to jump again. Set to 0f to instantly jump again")]
@@ -48,13 +47,6 @@ public class MPNormalMovement : MonoBehaviour
 	public LayerMask GroundLayers;
 
 	[Header("Cinemachine")]
-
-	[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
-	[SerializeField]
-	[ReadOnlyInspector]
-	// IBN: Assigned at Awake()
-	private GameObject CinemachineCameraTarget;
-	private string CameraTargetName = "CameraTarget";
 	[Tooltip("How far in degrees can you move the camera up")]
 	public float TopClamp = 70.0f;
 	[Tooltip("How far in degrees can you move the camera down")]
@@ -63,6 +55,12 @@ public class MPNormalMovement : MonoBehaviour
 	public float CameraAngleOverride = 0.0f;
 	[Tooltip("For locking the camera position on all axis")]
 	public bool LockCameraPosition = false;
+	[Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
+	[SerializeField]
+	[ReadOnlyInspector]
+	// (IBN) Assigned at Awake()
+	private GameObject _cinemachineCameraTarget;
+	private string _cameraTargetName = "CameraTarget";
 
 	// cinemachine
 	private float _cinemachineTargetYaw;
@@ -115,12 +113,12 @@ public class MPNormalMovement : MonoBehaviour
 		}
 
 		// Assign reference to CameraTarget
-		CinemachineCameraTarget = transform.Find(CameraTargetName).gameObject;
+		_cinemachineCameraTarget = transform.Find(_cameraTargetName).gameObject;
 	}
 
 	private void Start()
 	{
-		_cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+		_cinemachineTargetYaw = _cinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
 		_controller = GetComponent<CharacterController>();
 		_input = GetComponent<MPControlsInput>();
@@ -133,7 +131,6 @@ public class MPNormalMovement : MonoBehaviour
 
 	private void Update()
 	{
-
 		JumpAndGravity();
 		GroundedCheck();
 		Move();
@@ -152,6 +149,7 @@ public class MPNormalMovement : MonoBehaviour
 		Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
 			QueryTriggerInteraction.Ignore);
 
+		// (IBN) Event!
 		OnGroundedCheck?.Invoke(this, Grounded);
 	}
 
@@ -172,7 +170,7 @@ public class MPNormalMovement : MonoBehaviour
 		_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 
 		// Cinemachine will follow this target
-		CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
+		_cinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
 			_cinemachineTargetYaw, 0.0f);
 	}
 
@@ -239,7 +237,8 @@ public class MPNormalMovement : MonoBehaviour
 						 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 		}
 		
-		// (IBN) Animation event invoke
+		// (IBN) Event!
+		// This one in particular is a hack for passing relevant data to MPAnimation
 		float[] animationData = new float[2];
 		animationData[0] = _animationBlend;
 		animationData[1] = inputMagnitude;
@@ -253,6 +252,7 @@ public class MPNormalMovement : MonoBehaviour
 			// reset the fall timeout timer
 			_fallTimeoutDelta = FallTimeout;
 
+			// (IBN) Event!
 			OnGrounded?.Invoke(this, EventArgs.Empty);
 
 			// stop our velocity dropping infinitely when grounded
@@ -267,6 +267,7 @@ public class MPNormalMovement : MonoBehaviour
 				// the square root of H * -2 * G = how much velocity needed to reach desired height
 				_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
 
+				// (IBN) Event!
 				OnJump?.Invoke(this, EventArgs.Empty);
 			}
 
@@ -288,6 +289,7 @@ public class MPNormalMovement : MonoBehaviour
 			}
 			else
 			{
+				// (IBN) Event!
 				OnFall?.Invoke(this, EventArgs.Empty);
 			}
 
@@ -323,10 +325,18 @@ public class MPNormalMovement : MonoBehaviour
 			GroundedRadius);
 	}
 
+	// (IBN) Extra modifications
+
 	public void ToggleNormalMovement(bool value)
 	{
 		_normalMovementEnabled = value;
 		// Quick hack:
+		ResetNormalMovement();
+	}
+
+	public void ResetNormalMovement()
+	{
+		_speed = 0.0f;
 		_verticalVelocity = 0.0f;
 	}
 }

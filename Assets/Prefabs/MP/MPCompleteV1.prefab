@@ -762,6 +762,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b83dfcae59abb6a4d88cc833019bff4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Animation: {fileID: 0}
+  ControlsInput: {fileID: 0}
+  NormalMovement: {fileID: 0}
+  SpecialMovement: {fileID: 0}
 --- !u!114 &8941421620364250518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,11 +809,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 033ec5f1f870171438ba9e6072d400fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 4
+  MoveSpeed: 5
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   JumpHeight: 1.4
-  Gravity: -9.8
+  Gravity: -8
   JumpTimeout: 0.05
   FallTimeout: 0.15
   Grounded: 1
@@ -818,11 +822,11 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
-  CinemachineCameraTarget: {fileID: 1928576973529023155}
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  _cinemachineCameraTarget: {fileID: 0}
 --- !u!114 &8153808001382778626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -835,10 +839,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d9964364c37a8478d9c2a12d38e215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashingTime: 0.5
-  _dashingSpeed: 10
-  _cooldownTime: 1
-  _state: 0
+  DashingTime: 0.5
+  DashingSpeed: 10
+  CooldownTime: 1
+  CooldownRequireGrounded: 1
+  _currentState: 0
 --- !u!1 &2627794077956519238
 GameObject:
   m_ObjectHideFlags: 0

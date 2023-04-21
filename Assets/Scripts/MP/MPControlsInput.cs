@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// (IBN) Made with refernce to Unity's StarterAssets [ThirdPersonController.cs]
 public class MPControlsInput : MonoBehaviour
 {
-	private PlayerInput playerInput;
+	private PlayerInput _playerInput;
 
 	[Header("Normal Input Values")]
 	public Vector2 move;
@@ -22,12 +23,18 @@ public class MPControlsInput : MonoBehaviour
 	public bool cursorLocked = true;
 	public bool cursorInputForLook = true;
 
+	public enum ActionMapName
+	{
+		NORMAL,
+		SPECIAL,
+	}
+
 	// Events
 	public event EventHandler OnActionAFired;
 
 	private void Awake()
 	{
-		playerInput = GetComponent<PlayerInput>();
+		_playerInput = GetComponent<PlayerInput>();
 	}
 
 	private void Start()
@@ -55,7 +62,7 @@ public class MPControlsInput : MonoBehaviour
 
 	public void OnDash(InputValue value)
 	{
-		dash = value.Get<Vector3>();
+		DashInput(value.Get<Vector3>());
 	}
 
 	public void OnActionA(InputValue value)
@@ -66,20 +73,6 @@ public class MPControlsInput : MonoBehaviour
 	public void OnEscape(InputValue value)
 	{
 		GameController.Instance.PauseToggle();
-	}
-
-	public void SwitchActionMap()
-	{
-		// Switch method because we are only working with 2 actions maps.
-		// Switch between Normal movement to Special movement
-		if (playerInput.currentActionMap.name == "Normal")
-		{
-			playerInput.SwitchCurrentActionMap("Special");
-		}
-		else
-		{
-			playerInput.SwitchCurrentActionMap("Normal");
-		}
 	}
 
 	#region Update values
@@ -96,6 +89,11 @@ public class MPControlsInput : MonoBehaviour
 	private void JumpInput(bool newJumpState)
 	{
 		jump = newJumpState;
+	}
+
+	private void DashInput(Vector3 newDashDirection)
+	{
+		dash = newDashDirection;
 	}
 	#endregion
 
@@ -117,4 +115,17 @@ public class MPControlsInput : MonoBehaviour
 		Cursor.lockState = cursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
 	}
 	#endregion
+
+	public void ChangeActionMap(ActionMapName newActionMap)
+	{
+		switch (newActionMap)
+		{
+			case ActionMapName.NORMAL:
+				_playerInput.SwitchCurrentActionMap("Normal");
+				break;
+			case ActionMapName.SPECIAL:
+				_playerInput.SwitchCurrentActionMap("Special");
+				break;
+		}
+	}
 }

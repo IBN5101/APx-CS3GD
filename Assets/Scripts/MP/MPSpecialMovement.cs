@@ -5,9 +5,17 @@ using UnityEngine.InputSystem.XR;
 
 public class MPSpecialMovement : MonoBehaviour
 {
-	[SerializeField] private float _dashingTime = 1.0f;
-	[SerializeField] private float _dashingSpeed = 5.0f;
-	[SerializeField] private float _cooldownTime = 1.0f;
+	[Header("Settings")]
+
+	[Tooltip("Duration of dashing action")]
+	public float DashingTime = 0.5f;
+	[Tooltip("Dashing speed of the character in m/s")]
+	public float DashingSpeed = 10.0f;
+	[Tooltip("Duration of cooldown period")]
+	public float CooldownTime = 1.0f;
+	[Tooltip("Dashing cooldown if the player is Grounded")]
+	public bool CooldownRequireGrounded = true;
+	[Space(10)]
 
 	private MPControlsInput _input;
 	private MPNormalMovement _normalMovement;
@@ -18,7 +26,7 @@ public class MPSpecialMovement : MonoBehaviour
 	private bool _cooldownCompleted = false;
 
 	// (IBN) Should have used a proper State Machine ...
-	private enum State
+	public enum State
 	{
 		IDLE,
 		PREP,
@@ -27,7 +35,7 @@ public class MPSpecialMovement : MonoBehaviour
 	}
 	[SerializeField]
 	[ReadOnlyInspector]
-	private State _state;
+	private State _currentState;
 
 	private void Start()
 	{
@@ -35,24 +43,27 @@ public class MPSpecialMovement : MonoBehaviour
 		_normalMovement = GetComponent<MPNormalMovement>();
 		_controller = GetComponent<CharacterController>();
 
-		_state = State.IDLE;
+		_currentState = State.IDLE;
 
 		_input.OnActionAFired += input_OnActionAFired;
 	}
 
 	private void Update()
 	{
-		switch (_state)
+		switch (_currentState)
 		{
 			case State.DASH:
 				Vector3 dashingDirection = transform.TransformDirection(_currentDashingDirection);
-				_controller.Move(dashingDirection * _dashingSpeed * Time.deltaTime);
+				_controller.Move(dashingDirection * DashingSpeed * Time.deltaTime);
 
 				if (_dashingCompleted)
 					SwitchState(State.COOLDOWN);
 				break;
 			case State.COOLDOWN:
-				if (_normalMovement.Grounded && _cooldownCompleted)
+				bool groundedCheck = true;
+				if (CooldownRequireGrounded)
+					groundedCheck = _normalMovement.Grounded;
+				if (groundedCheck && _cooldownCompleted)
 					SwitchState(State.IDLE);
 				break;
 
@@ -63,7 +74,7 @@ public class MPSpecialMovement : MonoBehaviour
 
 	private void input_OnActionAFired(object sender, System.EventArgs e)
 	{
-		switch (_state)
+		switch (_currentState)
 		{
 			case State.IDLE:
 				SwitchState(State.PREP);
@@ -100,14 +111,15 @@ public class MPSpecialMovement : MonoBehaviour
 				OnCooldownStart();
 				break;
 		}
-		_state = newState;
+		_currentState = newState;
 		//Debug.Log("MPSpecialMovement, new State: " + _state);
 	}
 
 	private void OnPrepStart()
 	{
 		GameController.Instance.ChangeTimeScale(0.1f);
-		_input.SwitchActionMap();
+		GameController.Instance.ToggleDashingVolume(true);
+		_input.ChangeActionMap(MPControlsInput.ActionMapName.SPECIAL);
 	}
 
 	private void OnDashStart()
@@ -122,8 +134,9 @@ public class MPSpecialMovement : MonoBehaviour
 	private void OnCooldownStart()
 	{
 		GameController.Instance.ChangeTimeScale(1.0f);
+		GameController.Instance.ToggleDashingVolume(false);
 		_normalMovement.ToggleNormalMovement(true);
-		_input.SwitchActionMap();
+		_input.ChangeActionMap(MPControlsInput.ActionMapName.NORMAL);
 
 		_cooldownCompleted = false;
 		StartCoroutine(CooldownTimer());
@@ -131,13 +144,18 @@ public class MPSpecialMovement : MonoBehaviour
 
 	private IEnumerator DashingTimer()
 	{
-		yield return new WaitForSeconds(_dashingTime);
+		yield return new WaitForSeconds(DashingTime);
 		_dashingCompleted = true;
 	}
 
 	private IEnumerator CooldownTimer()
 	{
-		yield return new WaitForSeconds(_cooldownTime);
+		yield return new WaitForSeconds(CooldownTime);
 		_cooldownCompleted = true;
+	}
+
+	public void ResetSpecialMovement()
+	{
+		SwitchState(State.COOLDOWN);
 	}
 }

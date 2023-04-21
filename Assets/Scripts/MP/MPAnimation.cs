@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
+// (IBN) Made with refernce to Unity's StarterAssets [ThirdPersonController.cs]
 public class MPAnimation : MonoBehaviour
 {
 	// Animation IDs

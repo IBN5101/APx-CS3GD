@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class MPAbsolute : MonoBehaviour
 {
-	public MPAnimation mpAnimation;
-	public MPControlsInput mpControlsInput;
-	public MPNormalMovement mpNormalMovement;
-	public MPSpecialMovement mpSpecialMovement;
+	public MPAnimation Animation;
+	public MPControlsInput ControlsInput;
+	public MPNormalMovement NormalMovement;
+	public MPSpecialMovement SpecialMovement;
 
 	private void Start()
 	{
-		mpAnimation = GetComponent<MPAnimation>();
-		mpControlsInput = GetComponent<MPControlsInput>();
-		mpNormalMovement = GetComponent<MPNormalMovement>();
-		mpSpecialMovement = GetComponent<MPSpecialMovement>();
+		Animation = GetComponent<MPAnimation>();
+		ControlsInput = GetComponent<MPControlsInput>();
+		NormalMovement = GetComponent<MPNormalMovement>();
+		SpecialMovement = GetComponent<MPSpecialMovement>();
+	}
+
+	public void ResetAllMovements()
+	{
+		NormalMovement.ResetNormalMovement();
+		SpecialMovement.ResetSpecialMovement();
 	}
 }

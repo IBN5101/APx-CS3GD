@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class JumpPad : MonoBehaviour
 {
+	[Header("Settings")]
+
+	[Tooltip("Player jump height change")]
+	public float NewJumpHeight = 10;
+
 	private MeshRenderer _padMeshRenderer;
 	private Material _jumpPadDisbled;
 	private Material _jumpPadEnabled;
 
 	private float _oldJumpHeight;
-	[SerializeField] private float _newJumpHeight = 10;
 
 	private void Awake()
 	{
@@ -26,7 +30,7 @@ public class JumpPad : MonoBehaviour
 			if (other.TryGetComponent<MPNormalMovement>(out MPNormalMovement player))
 			{
 				_oldJumpHeight = player.JumpHeight;
-				player.JumpHeight = _newJumpHeight;
+				player.JumpHeight = NewJumpHeight;
 			}
 		}
 	}
