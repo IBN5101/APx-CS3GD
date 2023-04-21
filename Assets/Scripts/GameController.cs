@@ -13,9 +13,6 @@ public class GameController : MonoBehaviour
 	[Header("MP")]
 	[SerializeField] private MPAbsolute player;
 
-	[Header("UI")]
-	[SerializeField] private GameObject pauseMenu;
-
 	[Header("Others")]
 	[SerializeField] private Volume _dashingVolume;
 	[SerializeField] private Volume _teleportVolume;
@@ -29,6 +26,7 @@ public class GameController : MonoBehaviour
 
 	// Event
 	public event EventHandler OnLevelReset;
+	public event EventHandler<bool> OnGamePause;
 
 	private void Awake()
 	{
@@ -65,14 +63,16 @@ public class GameController : MonoBehaviour
 		if (_paused)
 		{
 			Time.timeScale = 0f;
-			player.ControlsInput.SetCursorAll(false);
-			pauseMenu.SetActive(true);
+			Time.fixedDeltaTime = this._fixedDeltaTime * Time.timeScale;
+
+			OnGamePause?.Invoke(this, true);
 		}
 		else
 		{
 			Time.timeScale = _currentTimescale;
-			player.ControlsInput.SetCursorAll(true);
-			pauseMenu.SetActive(false);
+			Time.fixedDeltaTime = this._fixedDeltaTime * Time.timeScale;
+
+			OnGamePause?.Invoke(this, false);
 		}
 	}
 

@@ -143,8 +143,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.5, z: 1}
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &8973108666287461673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4596836f4b3570345b4269e870c8bf8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _teleportDestination: {fileID: 0}
+  TeleportTime: 2
 --- !u!1 &8124300685821170973
 GameObject:
   m_ObjectHideFlags: 0

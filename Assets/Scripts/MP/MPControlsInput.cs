@@ -27,6 +27,7 @@ public class MPControlsInput : MonoBehaviour
 	{
 		NORMAL,
 		SPECIAL,
+		PAUSED,
 	}
 
 	// Events
@@ -40,6 +41,8 @@ public class MPControlsInput : MonoBehaviour
 	private void Start()
 	{
 		SetCursorState(cursorLocked);
+
+		GameController.Instance.OnGamePause += GameController_OnGamePause;
 	}
 
 	public void OnMove(InputValue value)
@@ -108,7 +111,7 @@ public class MPControlsInput : MonoBehaviour
 		Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 	}
 
-	public void SetCursorAll(bool locked)
+	private void SetCursorAll(bool locked)
 	{
 		cursorLocked = locked;
 		cursorInputForLook = locked;
@@ -126,6 +129,24 @@ public class MPControlsInput : MonoBehaviour
 			case ActionMapName.SPECIAL:
 				_playerInput.SwitchCurrentActionMap("Special");
 				break;
+			case ActionMapName.PAUSED:
+				_playerInput.SwitchCurrentActionMap("Paused");
+				break;
 		}
 	}
+	private void GameController_OnGamePause(object sender, bool paused)
+	{
+		if (paused)
+		{
+			ChangeActionMap(ActionMapName.PAUSED);
+			SetCursorAll(false);
+		}
+		else
+		{
+			ChangeActionMap(ActionMapName.NORMAL);
+			SetCursorAll(true);
+		}
+
+	}
+
 }

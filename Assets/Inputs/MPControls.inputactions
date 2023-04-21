@@ -330,6 +330,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Paused",
+            "id": "b63918fb-1dcd-4ab7-8b86-e3b58b824205",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "38cc0449-c4cb-4fdf-8ebf-15cde340166a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c93227ef-4838-4702-83b2-14f80763efe6",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
