@@ -15,10 +15,10 @@ public class TeleportPad : MonoBehaviour
 
 	private void Start()
 	{
-		GameController.Instance.OnLevelReset += GameController_OnLevelReset;
+		LevelController.Instance.OnLevelReset += LevelController_OnLevelReset;
 	}
 
-	private void GameController_OnLevelReset(object sender, System.EventArgs e)
+	private void LevelController_OnLevelReset(object sender, System.EventArgs e)
 	{
 		StopTeleporting();
 	}
@@ -41,19 +41,19 @@ public class TeleportPad : MonoBehaviour
 
 	private IEnumerator Teleporting()
 	{
-		GameController.Instance.ToggleTeleportVolume(true);
+		LevelController.Instance.ToggleTeleportVolume(true);
 
 		yield return new WaitForSeconds(TeleportTime);
-		GameController.Instance.ForceTeleportPlayer(_teleportDestination.position);
+		LevelController.Instance.ForceTeleportPlayer(_teleportDestination.position);
 
-		GameController.Instance.ToggleTeleportVolume(false);
+		LevelController.Instance.ToggleTeleportVolume(false);
 	}
 
 	private void StopTeleporting()
 	{
 		if (_teleportCoroutine != null)
 		{
-			GameController.Instance.ToggleTeleportVolume(false);
+			LevelController.Instance.ToggleTeleportVolume(false);
 
 			StopCoroutine(_teleportCoroutine);
 			_teleportCoroutine = null;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,6 +37,9 @@ public class MPSpecialMovement : MonoBehaviour
 	[SerializeField]
 	[ReadOnlyInspector]
 	private State _currentState;
+
+	// Event
+	public event EventHandler<bool> OnDashingIdle;
 
 	private void Start()
 	{
@@ -100,6 +104,7 @@ public class MPSpecialMovement : MonoBehaviour
 		switch (newState)
 		{
 			case State.IDLE:
+				OnIdleStart();
 				break;
 			case State.PREP:
 				OnPrepStart();
@@ -115,16 +120,21 @@ public class MPSpecialMovement : MonoBehaviour
 		//Debug.Log("MPSpecialMovement, new State: " + _state);
 	}
 
+	private void OnIdleStart()
+	{
+		OnDashingIdle?.Invoke(this, true);
+	}
+
 	private void OnPrepStart()
 	{
-		GameController.Instance.ChangeTimeScale(0.1f);
-		GameController.Instance.ToggleDashingVolume(true);
+		LevelController.Instance.ChangeTimeScale(0.1f);
+		LevelController.Instance.ToggleDashingVolume(true);
 		_input.ChangeActionMap(MPControlsInput.ActionMapName.SPECIAL);
 	}
 
 	private void OnDashStart()
 	{
-		GameController.Instance.ChangeTimeScale(1.0f);
+		LevelController.Instance.ChangeTimeScale(1.0f);
 		_normalMovement.ToggleNormalMovement(false);
 
 		_dashingCompleted = false;
@@ -133,8 +143,10 @@ public class MPSpecialMovement : MonoBehaviour
 
 	private void OnCooldownStart()
 	{
-		GameController.Instance.ChangeTimeScale(1.0f);
-		GameController.Instance.ToggleDashingVolume(false);
+		OnDashingIdle?.Invoke(this, false);
+
+		LevelController.Instance.ChangeTimeScale(1.0f);
+		LevelController.Instance.ToggleDashingVolume(false);
 		_normalMovement.ToggleNormalMovement(true);
 		_input.ChangeActionMap(MPControlsInput.ActionMapName.NORMAL);
 

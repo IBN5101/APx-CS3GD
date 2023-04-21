@@ -23,4 +23,8 @@ public class GameAssets : MonoBehaviour
 	[Header("JumpPad")]
 	public Material m_JumpPadDisabled;
 	public Material m_JumpPadEnabled;
+
+	[Header("Checkpoint")]
+	public Material m_checkpointDisabled;
+	public Material m_checkpointEnabled;
 }

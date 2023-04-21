@@ -42,7 +42,7 @@ public class MPControlsInput : MonoBehaviour
 	{
 		SetCursorState(cursorLocked);
 
-		GameController.Instance.OnGamePause += GameController_OnGamePause;
+		LevelController.Instance.OnGamePause += LevelController_OnGamePause;
 	}
 
 	public void OnMove(InputValue value)
@@ -75,7 +75,7 @@ public class MPControlsInput : MonoBehaviour
 
 	public void OnEscape(InputValue value)
 	{
-		GameController.Instance.PauseToggle();
+		LevelController.Instance.PauseToggle();
 	}
 
 	#region Update values
@@ -134,7 +134,7 @@ public class MPControlsInput : MonoBehaviour
 				break;
 		}
 	}
-	private void GameController_OnGamePause(object sender, bool paused)
+	private void LevelController_OnGamePause(object sender, bool paused)
 	{
 		if (paused)
 		{

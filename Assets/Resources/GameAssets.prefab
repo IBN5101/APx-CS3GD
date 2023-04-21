@@ -44,5 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdc1c292d80aab14e9dfe5b3fb6ef297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scene_MainMenu: Main Menu
+  scene_G01: Level G01
   m_JumpPadDisabled: {fileID: 2100000, guid: e517fd641fdfd024db0045121a78abe2, type: 2}
   m_JumpPadEnabled: {fileID: 2100000, guid: 6d60d7a5d86a9b24c9f2a3b80add3a5f, type: 2}
+  m_checkpointDisabled: {fileID: 2100000, guid: f764cf2a461a2dd428b8ff0a8a9b5ecf,
+    type: 2}
+  m_checkpointEnabled: {fileID: 2100000, guid: 882db46b0bd4f514887524603ce34e8b, type: 2}
