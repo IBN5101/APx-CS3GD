@@ -16,7 +16,7 @@ public class LevelController : MonoBehaviour
 	[Tooltip("Current time point (TP)")]
 	[SerializeField]
 	[ReadOnlyInspector]
-	private int _currentTP;
+	public int CurrentTP;
 	[Space(10)]
 
 	[Tooltip("Default checkpoint")]
@@ -43,9 +43,10 @@ public class LevelController : MonoBehaviour
 	private bool _paused = false;
 
 	// Event
-	public event EventHandler<int> OnTPUpdated;
+	public event EventHandler<bool> OnLevelComplete;
 	public event EventHandler OnLevelReset;
 	public event EventHandler<bool> OnGamePause;
+	public event EventHandler OnTPUpdated;
 	public event EventHandler OnCheckpointDisable;
 
 	private void Awake()
@@ -76,15 +77,38 @@ public class LevelController : MonoBehaviour
 		// TESTING:
 		if (Input.GetKeyDown(KeyCode.T))
 		{
-			LevelReset();
+			UpdateTP(CurrentTP - 1);
 		}
 	}
 
 	public void LevelReset()
 	{
 		// Increase TP by 1
-		UpdateTP(_currentTP + 1);
+		UpdateTP(CurrentTP + 1);
+		// Respawn by forcefully teleporting to respawn point
 		ForceTeleportPlayer(_currentRespawnPosition);
+
+		OnLevelReset?.Invoke(this, EventArgs.Empty);
+	}
+
+	public void LevelComplete()
+	{
+		// Stop time
+		PauseTime();
+		// Check with database to see if this is a new record or not
+		bool newRecord = false;
+		int previousBestTP = LevelData.GetLevelScore(LevelName);
+		if (CurrentTP < previousBestTP)
+		{
+			LevelData.SetLevelScore(LevelName, CurrentTP);
+			newRecord = true;
+		}
+		// Update level progress
+		// (IBN) Very much a hack
+		if (((int) LevelName) >= LevelData.level_progress)
+			LevelData.level_progress = ((int) LevelName) + 1;
+
+		OnLevelComplete?.Invoke(this, newRecord);
 	}
 
 	public void ForceTeleportPlayer(Vector3 newPosition)
@@ -109,28 +133,40 @@ public class LevelController : MonoBehaviour
 
 	private void UpdateTP(int value)
 	{
-		_currentTP = value;
-		OnTPUpdated?.Invoke(this, _currentTP);
+		CurrentTP = value;
+
+		OnTPUpdated?.Invoke(this, EventArgs.Empty);
 	}
 
 	#region Pause & TimeScale
 	public void PauseToggle()
 	{
+		// (IBN) Yep, dumb dumb code.
 		_paused = !_paused;
 		if (_paused)
 		{
-			Time.timeScale = 0f;
-			Time.fixedDeltaTime = this._fixedDeltaTime * Time.timeScale;
+			PauseTime();
 
 			OnGamePause?.Invoke(this, true);
 		}
 		else
 		{
-			Time.timeScale = _currentTimescale;
-			Time.fixedDeltaTime = this._fixedDeltaTime * Time.timeScale;
+			ResumeTime();
 
 			OnGamePause?.Invoke(this, false);
 		}
+	}
+
+	private void PauseTime()
+	{
+		Time.timeScale = 0f;
+		Time.fixedDeltaTime = this._fixedDeltaTime * Time.timeScale;
+	}
+
+	private void ResumeTime()
+	{
+		Time.timeScale = _currentTimescale;
+		Time.fixedDeltaTime = this._fixedDeltaTime * Time.timeScale;
 	}
 
 	public void ChangeTimeScale(float timeScale)

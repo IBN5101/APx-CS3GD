@@ -28,6 +28,7 @@ public class MPControlsInput : MonoBehaviour
 		NORMAL,
 		SPECIAL,
 		PAUSED,
+		COMPLETE
 	}
 
 	// Events
@@ -42,7 +43,9 @@ public class MPControlsInput : MonoBehaviour
 	{
 		SetCursorState(cursorLocked);
 
+		LevelController.Instance.OnLevelComplete += LevelController_OnLevelComplete;
 		LevelController.Instance.OnGamePause += LevelController_OnGamePause;
+		
 	}
 
 	public void OnMove(InputValue value)
@@ -132,8 +135,18 @@ public class MPControlsInput : MonoBehaviour
 			case ActionMapName.PAUSED:
 				_playerInput.SwitchCurrentActionMap("Paused");
 				break;
+			case ActionMapName.COMPLETE:
+				_playerInput.SwitchCurrentActionMap("Complete");
+				break;
 		}
 	}
+
+	private void LevelController_OnLevelComplete(object sender, bool e)
+	{
+		ChangeActionMap(ActionMapName.COMPLETE);
+		SetCursorAll(false);
+	}
+
 	private void LevelController_OnGamePause(object sender, bool paused)
 	{
 		if (paused)
@@ -148,5 +161,4 @@ public class MPControlsInput : MonoBehaviour
 		}
 
 	}
-
 }

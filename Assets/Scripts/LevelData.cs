@@ -8,6 +8,10 @@ public class LevelData
 	// Definitely should have used something like a dictionary.
 	// But a hack it is.
 
+	// Overall progress
+	// Hack version: dependant of LevelName Enum
+	public static int level_progress = 1;
+
 	// Testing ground
 	public static int level_testing = 460;
 	// G01
