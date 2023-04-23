@@ -64,7 +64,11 @@ public class LevelController : MonoBehaviour
 
 	private void Start()
 	{
-		UpdateTP(LevelData.GetLevelScore(LevelName));
+		// Retrieve data from LevelData
+		int startingTP = LevelData.GetLevelScore(LevelName);
+		if (startingTP == LevelData.DEFAULT_TP)
+			startingTP = 1;
+		UpdateTP(startingTP);
 
 		// Enable (visually) default checkpoint
 		_defaultCheckpoint.EnableCheckpoint();

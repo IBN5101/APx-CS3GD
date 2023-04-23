@@ -813,7 +813,7 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   JumpHeight: 1.4
-  Gravity: -8
+  Gravity: -10
   JumpTimeout: 0.05
   FallTimeout: 0.15
   Grounded: 1

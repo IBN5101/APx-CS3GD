@@ -12,18 +12,21 @@ public class LevelData
 	// Hack version: dependant of LevelName Enum
 	public static int level_progress = 1;
 
+	// Default value
+	public static int DEFAULT_TP = 999;
+
 	// Testing ground
 	public static int level_testing = 460;
 	// G01
-	public static int level_0 = 0;
+	public static int level_0 = DEFAULT_TP;
 	// F2_01
-	public static int level_1 = 0;
+	public static int level_1 = DEFAULT_TP;
 	// F2_02
-	public static int level_2 = 0;
+	public static int level_2 = DEFAULT_TP;
 	// F2_03
-	public static int level_3 = 0;
+	public static int level_3 = DEFAULT_TP;
 	// F2_04
-	public static int level_4 = 0;
+	public static int level_4 = DEFAULT_TP;
 
 	public enum LevelName
 	{
