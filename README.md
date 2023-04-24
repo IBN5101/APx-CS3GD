@@ -8,7 +8,7 @@ Game project for CS3GD (Game Development) module.
 https://assetstore.unity.com/packages/essentials/starter-assets-third-person-character-controller-196526
 
 - Synty Store: Polygon assets 
-Imported: Icons pack, Office pack, Prototype pack
+Imported: Icons pack, Office pack, Prototype pack, Scifi pack
 https://syntystore.com/
 
 - Save Game Free - Gold Update
