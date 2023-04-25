@@ -64,15 +64,4 @@ public class MPAnimation : MonoBehaviour
 	{
 		_animator.SetBool(_animIDFreeFall, true);
 	}
-
-	private void OnFootstep(AnimationEvent animationEvent)
-	{
-		// Audio, implement later.
-	}
-
-	private void OnLand(AnimationEvent animationEvent)
-	{
-		// Audio, implement later.
-	}
-
 }

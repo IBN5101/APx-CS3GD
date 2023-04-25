@@ -5096,6 +5096,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 534205451377409495, guid: 927ef8787d8b6f7448a89c2756e171e2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 534205451377409495, guid: 927ef8787d8b6f7448a89c2756e171e2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290927386785941692, guid: 927ef8787d8b6f7448a89c2756e171e2,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290927386785941692, guid: 927ef8787d8b6f7448a89c2756e171e2,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fbbb7e0ea529b15498f84b59d51fa321, type: 3}
     - target: {fileID: 8883715078021234101, guid: 927ef8787d8b6f7448a89c2756e171e2,
         type: 3}
       propertyPath: player
