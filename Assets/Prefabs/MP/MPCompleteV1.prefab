@@ -810,6 +810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb171ec9ef25744d84a5ca218bbe6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioVolume: 0.25
   LandingAudioClip: {fileID: 8300000, guid: baac702e4a9afcf40b345bb16b4f0f6e, type: 3}
   FootstepAudioClips:
   - {fileID: 8300000, guid: 10107d1587181cc448db1f898d4a4ddf, type: 3}
@@ -817,7 +818,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cefee32fafdaacd47b180fd6b3e6393a, type: 3}
   - {fileID: 8300000, guid: 945378a1308f1a248ba9b86cf22322f7, type: 3}
   - {fileID: 8300000, guid: e79c073523339d4488cd68a45e1c9a75, type: 3}
-  FootstepAudioVolume: 0.3
+  DashingAudioClip: {fileID: 8300000, guid: 881e3f52c86c94f26a60718d35627cd8, type: 3}
+  DeathAudioClip: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
 --- !u!114 &8941421620364250514
 MonoBehaviour:
   m_ObjectHideFlags: 0

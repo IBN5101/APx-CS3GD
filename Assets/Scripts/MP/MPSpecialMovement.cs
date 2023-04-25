@@ -40,6 +40,7 @@ public class MPSpecialMovement : MonoBehaviour
 
 	// Event
 	public event EventHandler<bool> OnDashingIdle;
+	public event EventHandler OnDashingDash;
 
 	private void Start()
 	{
@@ -139,6 +140,8 @@ public class MPSpecialMovement : MonoBehaviour
 
 		_dashingCompleted = false;
 		StartCoroutine(DashingTimer());
+
+		OnDashingDash?.Invoke(this, EventArgs.Empty);
 	}
 
 	private void OnCooldownStart()

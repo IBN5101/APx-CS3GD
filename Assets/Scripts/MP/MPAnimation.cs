@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 // (IBN) Made with refernce to Unity's StarterAssets [ThirdPersonController.cs]
 public class MPAnimation : MonoBehaviour
@@ -30,37 +27,37 @@ public class MPAnimation : MonoBehaviour
 
 		// Normal movement events
 		_normalMovement = GetComponent<MPNormalMovement>();
-		_normalMovement.OnGroundedCheck += normalMovement_OnGroundedCheck;
-		_normalMovement.OnMoveAnimation += normalMovement_OnMoveAnimation;
-		_normalMovement.OnGrounded += normalMovement_OnGrounded;
-		_normalMovement.OnJump += normalMovement_OnJump;
-		_normalMovement.OnFall += normalMovement_OnFall;
+		_normalMovement.OnGroundedCheck += NormalMovement_OnGroundedCheck;
+		_normalMovement.OnMoveAnimation += NormalMovement_OnMoveAnimation;
+		_normalMovement.OnGrounded += NormalMovement_OnGrounded;
+		_normalMovement.OnJump += NormalMovement_OnJump;
+		_normalMovement.OnFall += NormalMovement_OnFall;
 	}
 	private void Update()
 	{
 		_hasAnimator = TryGetComponent(out _animator);
 	}
 
-	private void normalMovement_OnGroundedCheck(object sender, bool e)
+	private void NormalMovement_OnGroundedCheck(object sender, bool e)
 	{
 		_animator.SetBool(_animIDGrounded, e);
 	}
-	private void normalMovement_OnMoveAnimation(object sender, float[] e)
+	private void NormalMovement_OnMoveAnimation(object sender, float[] e)
 	{
 		_animator.SetFloat(_animIDSpeed, e[0]);
 		_animator.SetFloat(_animIDMotionSpeed, e[1]);
 	}
-	private void normalMovement_OnGrounded(object sender, System.EventArgs e)
+	private void NormalMovement_OnGrounded(object sender, System.EventArgs e)
 	{
 		_animator.SetBool(_animIDJump, false);
 		_animator.SetBool(_animIDFreeFall, false);
 	}
 
-	private void normalMovement_OnJump(object sender, System.EventArgs e)
+	private void NormalMovement_OnJump(object sender, System.EventArgs e)
 	{
 		_animator.SetBool(_animIDJump, true);
 	}
-	private void normalMovement_OnFall(object sender, System.EventArgs e)
+	private void NormalMovement_OnFall(object sender, System.EventArgs e)
 	{
 		_animator.SetBool(_animIDFreeFall, true);
 	}

@@ -2579,6 +2579,11 @@ PrefabInstance:
       propertyPath: CooldownRequireGrounded
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8941421620364250514, guid: 5af9ec3a8ed81cb47b23c0674382b8b1,
+        type: 3}
+      propertyPath: BottomClamp
+      value: -50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5af9ec3a8ed81cb47b23c0674382b8b1, type: 3}
 --- !u!4 &1969078468015424475
