@@ -3983,6 +3983,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 45135760}
     m_Modifications:
+    - target: {fileID: 10922443695608288, guid: 533b44f0bd3ea4d4aad8fac55429c9c3,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.936378
+      objectReference: {fileID: 0}
+    - target: {fileID: 10922443695608288, guid: 533b44f0bd3ea4d4aad8fac55429c9c3,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 10922443695608288, guid: 533b44f0bd3ea4d4aad8fac55429c9c3,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 10922443695608288, guid: 533b44f0bd3ea4d4aad8fac55429c9c3,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4293853439
+      objectReference: {fileID: 0}
     - target: {fileID: 1929855091286756370, guid: 533b44f0bd3ea4d4aad8fac55429c9c3,
         type: 3}
       propertyPath: m_Name
@@ -4111,6 +4131,11 @@ PrefabInstance:
     - target: {fileID: 3038038904785290491, guid: 533b44f0bd3ea4d4aad8fac55429c9c3,
         type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8414393456803191417, guid: 533b44f0bd3ea4d4aad8fac55429c9c3,
+        type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
