@@ -10,7 +10,8 @@ public class LevelData
 
 	// Overall progress
 	// Hack version: dependant of LevelName Enum
-	public static int level_progress = 1;
+	// Make sure to set this to 1 in production
+	public static int level_progress = 2;
 
 	// Default value
 	public static int DEFAULT_TP = 9999;

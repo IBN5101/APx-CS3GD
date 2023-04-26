@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelUI : MonoBehaviour
@@ -34,12 +35,14 @@ public class LevelUI : MonoBehaviour
 
 	public void MapButton()
 	{
-
+		LevelController.Instance.ChangeTimeScale(1f);
+		SceneManager.LoadScene(GameAssets.Instance.scene_Levels);
 	}
 
 	public void MainMenuButton()
 	{
-
+		LevelController.Instance.ChangeTimeScale(1f);
+		SceneManager.LoadScene(GameAssets.Instance.scene_MainMenu);
 	}
 
 	private void LevelController_OnLevelComplete(object sender, bool newRecord)

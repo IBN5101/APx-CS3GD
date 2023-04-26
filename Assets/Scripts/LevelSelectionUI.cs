@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelSelectionUI : MonoBehaviour
@@ -34,7 +35,22 @@ public class LevelSelectionUI : MonoBehaviour
 
 	public void GoToLevel(LevelData.LevelName level)
 	{
-		Debug.Log(level);
+		switch (level)
+		{
+			case LevelData.LevelName.G01:
+				SceneManager.LoadScene(GameAssets.Instance.scene_G01);
+				break;
+			case LevelData.LevelName.F2_01:
+				SceneManager.LoadScene(GameAssets.Instance.scene_F2_01);
+				break;
+			case LevelData.LevelName.F2_02:
+				SceneManager.LoadScene(GameAssets.Instance.scene_F2_02);
+				break;
+			case LevelData.LevelName.F2_03: 
+				break;
+			case LevelData.LevelName.F2_04:
+				break;
+		}
 	}
 
 }
