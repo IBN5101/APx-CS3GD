@@ -30,11 +30,11 @@ The timer on your top-left is your time point. In virtual Aston, time is slowed 
 
 To download the compiled file, go to the [releases page]() and download **"Virtual MB204 project.zip"**:
 
-![image](/README_images/Instruction01.jpg)
+![image](/README_images/Instruction01.png)
 
 Unzip the zip file and you will get a folder called **"Main"**, inside that folder will be the executable:
 
-![image](/README_images/Instruction02.jpg)
+![image](/README_images/Instruction02.png)
 
 ## For developers
 
@@ -42,11 +42,11 @@ Please, if you value your sanity, do not check the code. Do not awaken the Spagh
 
 ## Game preview
 
-![image](/README_images/Preview01.jpg)
+![image](/README_images/Preview01.png)
 
-![image](/README_images/Preview01.jpg)
+![image](/README_images/Preview02.png)
 
-![image](/README_images/Preview01.jpg)
+![image](/README_images/Preview03.png)
 
 ## Major external assets used
 
