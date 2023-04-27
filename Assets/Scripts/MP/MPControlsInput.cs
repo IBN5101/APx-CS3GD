@@ -44,6 +44,7 @@ public class MPControlsInput : MonoBehaviour
 		SetCursorState(cursorLocked);
 
 		LevelController.Instance.OnLevelComplete += LevelController_OnLevelComplete;
+		LevelController.Instance.OnGameCompleted += LevelController_OnGameCompleted;
 		LevelController.Instance.OnGamePause += LevelController_OnGamePause;
 		
 	}
@@ -142,6 +143,12 @@ public class MPControlsInput : MonoBehaviour
 	}
 
 	private void LevelController_OnLevelComplete(object sender, bool e)
+	{
+		ChangeActionMap(ActionMapName.COMPLETE);
+		SetCursorAll(false);
+	}
+
+	private void LevelController_OnGameCompleted(object sender, EventArgs e)
 	{
 		ChangeActionMap(ActionMapName.COMPLETE);
 		SetCursorAll(false);

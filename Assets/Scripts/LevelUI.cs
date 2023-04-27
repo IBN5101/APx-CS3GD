@@ -11,19 +11,26 @@ public class LevelUI : MonoBehaviour
 	[Header("UI panels")]
 	[SerializeField] private GameObject _playPanel;
 	[SerializeField] private GameObject _pausePanel;
-	[SerializeField] private GameObject _levelCompletePanel;
+	[SerializeField] private GameObject _levelCompletedPanel;
 
-	[Header("UI elements")]
+	[Header("Play panel")]
 	[SerializeField] private TextMeshProUGUI _TPText;
 	[SerializeField] private Image _dashingIndicator;
+
+	[Header("Level completed panel")]
 	[SerializeField] private TextMeshProUGUI _TPResultText;
 	[SerializeField] private GameObject _newRecordText;
+	[SerializeField] private GameObject _levelCompletedText;
+	[SerializeField] private GameObject _gameCompletedText;
 
 	private void Start()
 	{
 		LevelController.Instance.OnLevelComplete += LevelController_OnLevelComplete;
 		LevelController.Instance.OnGamePause += LevelController_OnGamePause;
+		LevelController.Instance.OnGameCompleted += LevelController_OnGameCompleted;
+
 		LevelController.Instance.OnTPUpdated += LevelController_OnTPUpdated;
+
 		// (IBN) ... spaghetti!
 		LevelController.Instance.player.SpecialMovement.OnDashingIdle += SpecialMovement_OnDashingIdle;
 	}
@@ -50,7 +57,8 @@ public class LevelUI : MonoBehaviour
 		// Disable play panel (the TP counter and dashing indicator)
 		_playPanel.SetActive(false);
 		// Enable level complete panel
-		_levelCompletePanel.SetActive(true);
+		_levelCompletedPanel.SetActive(true);
+		_levelCompletedText.SetActive(true);
 		_TPResultText.SetText(LevelData.TPFormatting(LevelController.Instance.CurrentTP));
 		// Enable the new record if new record TP is set
 		_newRecordText.SetActive(newRecord);
@@ -59,6 +67,16 @@ public class LevelUI : MonoBehaviour
 	private void LevelController_OnGamePause(object sender, bool paused)
 	{
 		_pausePanel.SetActive(paused);
+	}
+
+	private void LevelController_OnGameCompleted(object sender, EventArgs e)
+	{
+		// Disable play panel (the TP counter and dashing indicator)
+		_playPanel.SetActive(false);
+		// Enable level complete panel
+		_levelCompletedPanel.SetActive(true);
+		_gameCompletedText.SetActive(true);
+		_TPResultText.SetText("Total time: \n" + LevelData.TPFormatting(LevelData.GetTotalScore()));
 	}
 
 	private void LevelController_OnTPUpdated(object sender, EventArgs e)

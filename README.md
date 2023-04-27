@@ -20,6 +20,9 @@ https://assetstore.unity.com/packages/tools/animation/dotween-hotween-v2-27676
 - FREE Casual Game SFX Pack
 https://assetstore.unity.com/packages/audio/sound-fx/free-casual-game-sfx-pack-54116
 
+- Free Stylized Skybox
+https://assetstore.unity.com/packages/2d/textures-materials/sky/free-stylized-skybox-212257
+
 [Music used]
 All background music used are made by Joel R. Steudler. 
 

@@ -42,10 +42,12 @@ public class LevelController : MonoBehaviour
 	// Pause
 	private bool _paused = false;
 
-	// Event
+	// Events
 	public event EventHandler<bool> OnLevelComplete;
 	public event EventHandler OnLevelReset;
 	public event EventHandler<bool> OnGamePause;
+	public event EventHandler OnGameCompleted;
+
 	public event EventHandler OnTPUpdated;
 	public event EventHandler OnCheckpointDisable;
 
@@ -113,6 +115,21 @@ public class LevelController : MonoBehaviour
 			LevelData.level_progress = ((int) LevelName) + 1;
 
 		OnLevelComplete?.Invoke(this, newRecord);
+	}
+
+	// This should only be called once at the final level
+	public void GameComplete()
+	{
+		// Stop time
+		PauseTime();
+		// Check with database to see if this is a new record or not
+		int previousBestTP = LevelData.GetLevelScore(LevelName);
+		if (CurrentTP < previousBestTP)
+		{
+			LevelData.SetLevelScore(LevelName, CurrentTP);
+		}
+
+		OnGameCompleted?.Invoke(this, EventArgs.Empty);
 	}
 
 	public void ForceTeleportPlayer(Vector3 newPosition)
