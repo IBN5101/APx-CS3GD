@@ -17,7 +17,7 @@ public class LevelSelectionUI : MonoBehaviour
 	private void Start()
 	{
 		// (IBN) Programming insanity
-		int level_progress = LevelData.level_progress;
+		int level_progress = LevelData.Level_progress;
 
 		if (level_progress >= 1)
 			_buttonG01.interactable = true;
@@ -46,11 +46,21 @@ public class LevelSelectionUI : MonoBehaviour
 			case LevelData.LevelName.F2_02:
 				SceneManager.LoadScene(GameAssets.Instance.scene_F2_02);
 				break;
-			case LevelData.LevelName.F2_03: 
+			case LevelData.LevelName.F2_03:
+				SceneManager.LoadScene(GameAssets.Instance.scene_F2_03);
 				break;
 			case LevelData.LevelName.F2_04:
+				SceneManager.LoadScene(GameAssets.Instance.scene_F2_04);
 				break;
 		}
+	}
+
+	public void MainMenuButton()
+	{
+		// This is the only place to save the game
+		SaveLoadGame.SaveCurrent();
+
+		SceneManager.LoadScene(GameAssets.Instance.scene_MainMenu);
 	}
 
 }

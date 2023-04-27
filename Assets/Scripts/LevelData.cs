@@ -11,23 +11,25 @@ public class LevelData
 	// Overall progress
 	// Hack version: dependant of LevelName Enum
 	// Make sure to set this to 1 in production
-	public static int level_progress = 2;
+	public static int Level_progress = 1;
 
 	// Default value
 	public static int DEFAULT_TP = 9999;
 
 	// Testing ground
-	public static int level_testing = 460;
+	private static int level_testing = 460;
 	// G01
-	public static int level_0 = DEFAULT_TP;
+	private static int level_0 = DEFAULT_TP;
 	// F2_01
-	public static int level_1 = DEFAULT_TP;
+	private static int level_1 = DEFAULT_TP;
 	// F2_02
-	public static int level_2 = DEFAULT_TP;
+	private static int level_2 = DEFAULT_TP;
 	// F2_03
-	public static int level_3 = DEFAULT_TP;
+	private static int level_3 = DEFAULT_TP;
 	// F2_04
-	public static int level_4 = DEFAULT_TP;
+	private static int level_4 = DEFAULT_TP;
+
+	public static SaveLoadGame.SAVE_SLOT CurrentSaveSlot;
 
 	public enum LevelName
 	{

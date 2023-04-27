@@ -9,10 +9,15 @@ public class MainMenuController : MonoBehaviour
 {
 	public void StartGame()
 	{
-		SceneManager.LoadScene(GameAssets.Instance.scene_G01);
+		SceneManager.LoadScene(GameAssets.Instance.scene_Levels);
 	}
 
 	public void OnExitGame(InputValue value)
+	{
+		Application.Quit();
+	}
+
+	public void ExitGameButton()
 	{
 		Application.Quit();
 	}

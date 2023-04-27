@@ -16,7 +16,7 @@ public class LevelController : MonoBehaviour
 	[Tooltip("Current time point (TP)")]
 	[SerializeField]
 	[ReadOnlyInspector]
-	public int CurrentTP;
+	public int CurrentTP = 0;
 	[Space(10)]
 
 	[Tooltip("Default checkpoint")]
@@ -34,6 +34,9 @@ public class LevelController : MonoBehaviour
 	[Header("Others")]
 	[SerializeField] private Volume _dashingVolume;
 	[SerializeField] private Volume _teleportVolume;
+
+	// Coroutine
+	private Coroutine _constantTPIncrease;
 
 	// Timescaling
 	private float _currentTimescale = 1.0f;
@@ -66,11 +69,12 @@ public class LevelController : MonoBehaviour
 
 	private void Start()
 	{
-		// Retrieve data from LevelData
-		int startingTP = LevelData.GetLevelScore(LevelName);
-		if (startingTP == LevelData.DEFAULT_TP)
-			startingTP = 1;
-		UpdateTP(startingTP);
+		// Start level with 1 TP
+		int startingTP = 1;
+		IncreaseTP(startingTP);
+
+		// TP Clock start
+		_constantTPIncrease = StartCoroutine(ConstantTPIncrease());
 
 		// Enable (visually) default checkpoint
 		_defaultCheckpoint.EnableCheckpoint();
@@ -78,19 +82,11 @@ public class LevelController : MonoBehaviour
 
 	}
 
-	private void Update()
-	{
-		// TESTING:
-		if (Input.GetKeyDown(KeyCode.T))
-		{
-			UpdateTP(CurrentTP - 1);
-		}
-	}
-
 	public void LevelReset()
 	{
-		// Increase TP by 1
-		UpdateTP(CurrentTP + 1);
+		// Increase TP by 10 on death
+		int resetTPIncrease = 10;
+		IncreaseTP(resetTPIncrease);
 		// Respawn by forcefully teleporting to respawn point
 		ForceTeleportPlayer(_currentRespawnPosition);
 
@@ -101,6 +97,9 @@ public class LevelController : MonoBehaviour
 	{
 		// Stop time
 		PauseTime();
+		// Stop constantTPIncrease coroutine
+		StopCoroutine(_constantTPIncrease);
+
 		// Check with database to see if this is a new record or not
 		bool newRecord = false;
 		int previousBestTP = LevelData.GetLevelScore(LevelName);
@@ -111,8 +110,8 @@ public class LevelController : MonoBehaviour
 		}
 		// Update level progress
 		// (IBN) Very much a hack
-		if (((int) LevelName) >= LevelData.level_progress)
-			LevelData.level_progress = ((int) LevelName) + 1;
+		if (((int) LevelName) >= LevelData.Level_progress)
+			LevelData.Level_progress = ((int) LevelName) + 1;
 
 		OnLevelComplete?.Invoke(this, newRecord);
 	}
@@ -122,6 +121,9 @@ public class LevelController : MonoBehaviour
 	{
 		// Stop time
 		PauseTime();
+		// Stop constantTPIncrease coroutine
+		StopCoroutine(_constantTPIncrease);
+
 		// Check with database to see if this is a new record or not
 		int previousBestTP = LevelData.GetLevelScore(LevelName);
 		if (CurrentTP < previousBestTP)
@@ -152,11 +154,22 @@ public class LevelController : MonoBehaviour
 		_currentRespawnPosition = newPosition;
 	}
 
-	private void UpdateTP(int value)
+	private void IncreaseTP(int value)
 	{
-		CurrentTP = value;
+		CurrentTP += value;
 
 		OnTPUpdated?.Invoke(this, EventArgs.Empty);
+	}
+
+	private IEnumerator ConstantTPIncrease()
+	{
+		int constantTPIncrease = 1;
+
+		while (true)
+		{
+			yield return new WaitForSeconds(10);
+			IncreaseTP(constantTPIncrease);
+		}
 	}
 
 	#region Pause & TimeScale
