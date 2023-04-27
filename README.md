@@ -28,11 +28,11 @@ The timer on your top-left is your time point. In virtual Aston, time is slowed 
 
 ## How to download and run the project:
 
-To download the compiled file, go to the [releases page]() and download **"Virtual MB204 project.zip"**:
+To download the compiled file, go to the [releases page](https://github.com/IBN5101/APx-CS3GD/releases) and download **"Virtual.MB204.project.zip"**:
 
 ![image](/README_images/Instruction01.png)
 
-Unzip the zip file and you will get a folder called **"Main"**, inside that folder will be the executable:
+Unzip the file and inside it will be the game you are looking for:
 
 ![image](/README_images/Instruction02.png)
 
